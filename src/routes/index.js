@@ -4,6 +4,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoggedInStack from './LoggedInStack';
 import NotLoggedInStack from './NotLoggedInStack';
 
+import SplashScreen from 'screens/splash';
+
 const Stack = createNativeStackNavigator();
 
 const Routes = () => {
@@ -16,7 +18,7 @@ const Routes = () => {
     try {
       // custom logic
       await sleep(2000);
-      const token = null;
+      const token = 'token here';
       setUserToken(token);
     } finally {
       setIsLoading(false);
@@ -38,9 +40,9 @@ const Routes = () => {
         <Stack.Screen
           name="SignIn"
           component={NotLoggedInStack}
-          options={{
-            title: 'Sign in',
-          }}
+          // options={{
+          //   title: 'Sign in',
+          // }}
           initialParams={{setUserToken}}
         />
       ) : (
