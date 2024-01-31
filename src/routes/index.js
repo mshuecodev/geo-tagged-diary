@@ -4,6 +4,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoggedInStack from './LoggedInStack';
 import NotLoggedInStack from './NotLoggedInStack';
 
+import HomeScreen from 'screens/home';
+
 import SplashScreen from 'screens/splash';
 
 const Stack = createNativeStackNavigator();
@@ -34,7 +36,10 @@ const Routes = () => {
     return <SplashScreen />;
   }
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
       {userToken == null ? (
         // No token found, user isn't signed in
         <Stack.Screen
@@ -47,7 +52,7 @@ const Routes = () => {
         />
       ) : (
         // User is signed in
-        <Stack.Screen name="Home" component={LoggedInStack} />
+        <Stack.Screen name="Home" component={HomeScreen} />
       )}
     </Stack.Navigator>
   );
