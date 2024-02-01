@@ -11,7 +11,7 @@ module.exports = {
           screens: './src/screens',
           components: './src/components',
           hooks: './src/hooks',
-          img: './src/img',
+          assets: './src/assets',
           themes: './src/themes',
         },
       },

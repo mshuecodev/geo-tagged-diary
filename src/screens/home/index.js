@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, Dimensions} from 'react-native';
-import Mapbox from '@rnmapbox/maps';
+import Mapbox, {Camera, UserLocation} from '@rnmapbox/maps';
 import Geolocation from '@react-native-community/geolocation';
 import {check, PERMISSIONS, RESULTS, request} from 'react-native-permissions';
+
+import pinIcon from '../../assets/pin2.png';
 
 Mapbox.setAccessToken(
   'sk.eyJ1IjoibWlzbjAzIiwiYSI6ImNsczFvNXJyOTBjeG0ybm8zbGRmM3gxNzkifQ.BmmF9FtCpmpMzNBbx-PPeQ',
@@ -10,8 +12,42 @@ Mapbox.setAccessToken(
 
 const fullHeight = Dimensions.get('window').height;
 
+const defaultCamera = {
+  centerCoordinate: [12.338, 45.4385],
+  zoomLevel: 17.4,
+};
+
 const App = () => {
   const [userLocation, setUserLocation] = useState(null);
+  const [selectedFeature, setSelectedFeature] = useState(null);
+
+  const featureCollection = {
+    type: 'FeatureCollection',
+    features: [
+      {
+        type: 'Feature',
+        id: '9d10456e-bdda-4aa9-9269-04c1667d4552',
+        properties: {
+          icon: 'example',
+          message: 'Hello!',
+        },
+        geometry: {
+          type: 'Point',
+          coordinates: [12.338, 45.4385],
+        },
+      },
+    ],
+  };
+
+  const onPinPress = e => {
+    if (selectedFeature) {
+      setSelectedFeature(undefined);
+      return;
+    }
+
+    const feature = e?.features[0];
+    setSelectedFeature(feature);
+  };
 
   const getCurrentPosition = () => {
     Geolocation.getCurrentPosition(
@@ -61,17 +97,44 @@ const App = () => {
   useEffect(() => {
     requestLocationPermissions();
   }, []);
+
+  console.log(userLocation);
   return (
-    <View style={styles.page}>
+    // <Mapbox.MapView style={styles.page}>
+    //   <Mapbox.Camera defaultSettings={defaultCamera} />
+    //   <Mapbox.Images images={{pinIcon}} />
+    //   <Mapbox.ShapeSource
+    //     id="mapPinsSource"
+    //     shape={featureCollection}
+    //     onPress={onPinPress}>
+    //     <Mapbox.SymbolLayer id="mapPinsLayer" style={styles.mapPinLayer} />
+    //   </Mapbox.ShapeSource>
+    //   {selectedFeature && (
+    //     <Mapbox.MarkerView
+    //       coordinate={selectedFeature.geometry.coordinates}></Mapbox.MarkerView>
+    //   )}
+    // </Mapbox.MapView>
+    <View style={styles.styles}>
       <View style={styles.container}>
-        <Mapbox.MapView style={styles.map}>
+        <Mapbox.MapView style={styles.map} tintColor={'red'}>
           {userLocation && (
-            <Mapbox.PointAnnotation
-              coordinate={[
-                userLocation.longitude,
-                userLocation.latitude,
-              ]}></Mapbox.PointAnnotation>
+            <Camera
+              // followZoomLevel={16}
+              // defaultSettings={{
+              //   centerCoordinate: [
+              //     userLocation.latitude,
+              //     userLocation.longitude,
+              //   ],
+              //   zoomLevel: 12,
+              // }}
+              zoomLevel={9}
+              followUserLocation={true}
+              followUserMode="compass"
+              centerCoordinate={[userLocation.latitude, userLocation.longitude]}
+            />
           )}
+
+          <UserLocation />
         </Mapbox.MapView>
       </View>
     </View>
@@ -79,6 +142,14 @@ const App = () => {
 };
 
 export default App;
+
+const CustomCalloutView = ({message}) => {
+  return (
+    <View style={styles.calloutContainerStyle}>
+      <Text style={styles.customCalloutText}>{message}</Text>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   page: {
@@ -92,5 +163,11 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1,
+  },
+  mapPinLayer: {
+    iconAllowOverlap: true,
+    iconAnchor: 'bottom',
+    iconSize: 1.0,
+    iconImage: 'exampleIcon',
   },
 });
