@@ -7,13 +7,16 @@
 
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
+import {PaperProvider} from 'react-native-paper';
 
 import Routes from 'routes/index';
 
 function App(): JSX.Element {
   return (
     <NavigationContainer>
-      <Routes />
+      <PaperProvider>
+        <Routes />
+      </PaperProvider>
     </NavigationContainer>
   );
 }

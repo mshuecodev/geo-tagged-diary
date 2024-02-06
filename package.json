@@ -5,6 +5,8 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
+    "log-android": "react-native log-android",
+    "log-ios": "react-native log-ios",
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest"
@@ -17,9 +19,12 @@
     "@react-navigation/native-stack": "^6.9.17",
     "@rnmapbox/maps": "^10.1.9",
     "axios": "^1.6.1",
+    "lottie-react-native": "^6.6.0",
     "native-base": "^3.4.28",
     "react": "18.2.0",
     "react-native": "0.72.6",
+    "react-native-gifted-chat": "^2.4.0",
+    "react-native-paper": "^5.12.3",
     "react-native-permissions": "^4.1.1",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "^3.27.0",

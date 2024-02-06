@@ -100,33 +100,11 @@ const App = () => {
 
   console.log(userLocation);
   return (
-    // <Mapbox.MapView style={styles.page}>
-    //   <Mapbox.Camera defaultSettings={defaultCamera} />
-    //   <Mapbox.Images images={{pinIcon}} />
-    //   <Mapbox.ShapeSource
-    //     id="mapPinsSource"
-    //     shape={featureCollection}
-    //     onPress={onPinPress}>
-    //     <Mapbox.SymbolLayer id="mapPinsLayer" style={styles.mapPinLayer} />
-    //   </Mapbox.ShapeSource>
-    //   {selectedFeature && (
-    //     <Mapbox.MarkerView
-    //       coordinate={selectedFeature.geometry.coordinates}></Mapbox.MarkerView>
-    //   )}
-    // </Mapbox.MapView>
     <View style={styles.styles}>
       <View style={styles.container}>
         <Mapbox.MapView style={styles.map} tintColor={'red'}>
           {userLocation && (
             <Camera
-              // followZoomLevel={16}
-              // defaultSettings={{
-              //   centerCoordinate: [
-              //     userLocation.latitude,
-              //     userLocation.longitude,
-              //   ],
-              //   zoomLevel: 12,
-              // }}
               zoomLevel={9}
               followUserLocation={true}
               followUserMode="compass"
