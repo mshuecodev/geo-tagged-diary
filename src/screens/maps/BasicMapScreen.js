@@ -95,10 +95,10 @@ const App = () => {
   };
 
   useEffect(() => {
+    console.log('maps here!');
     requestLocationPermissions();
   }, []);
 
-  console.log(userLocation);
   return (
     <View style={styles.styles}>
       <View style={styles.container}>
